@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pathology MCQs Endocrine (Set 2)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#FBF3E6; --cream-2:#F3E4D2; --paper:#FFFDF8; --sand:#EBD5C0;
+  --ink:#2F2744; --ink-soft:#6A5F80; --teal:#5B4B8A; --gold:#C08A5B;
+  --ok:#3D8B5E; --ok-bg:#E3F1E6; --bad:#B4453E; --bad-bg:#F9E4E0;
+  --line:rgba(47,39,68,.14); --r-lg:22px; --r-md:14px;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 90px)}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Poppins',system-ui,sans-serif;-webkit-tap-highlight-color:transparent}
+body{background:var(--cream);color:var(--ink);min-height:100vh;overflow-x:hidden;position:relative}
+
+/* Animated cream background */
+.bg{position:fixed;inset:0;z-index:0;overflow:hidden;background:linear-gradient(160deg,#FCF4E8 0%,#F7EADA 55%,#F1E0CC 100%)}
+.blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55;will-change:transform}
+.b1{width:48vmax;height:48vmax;left:-12vmax;top:-14vmax;background:#F7D9BF;animation:drift1 26s ease-in-out infinite alternate}
+.b2{width:42vmax;height:42vmax;right:-14vmax;top:18vh;background:#DCD3EC;opacity:.45;animation:drift2 32s ease-in-out infinite alternate}
+.b3{width:40vmax;height:40vmax;left:12vw;bottom:-16vmax;background:#F4D0C0;opacity:.5;animation:drift3 29s ease-in-out infinite alternate}
+.b4{width:30vmax;height:30vmax;right:8vw;bottom:-8vmax;background:#E8DEF1;opacity:.4;animation:drift1 36s ease-in-out infinite alternate-reverse}
+@keyframes drift1{to{transform:translate(9vw,7vh) scale(1.12)}}
+@keyframes drift2{to{transform:translate(-10vw,-6vh) scale(1.08)}}
+@keyframes drift3{to{transform:translate(7vw,-9vh) scale(1.15)}}
+.grain{position:absolute;inset:0;opacity:.35;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .45 0 0 0 0 .3 0 0 0 .22 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+canvas{position:absolute;inset:0;width:100%;height:100%}
+
+/* Screens */
+#home-screen,#quiz-screen{position:relative;z-index:1;max-width:780px;margin:0 auto;padding:22px 18px 40px;min-height:100vh;flex-direction:column}
+#home-screen{display:flex}#quiz-screen{display:none}
+.home-content{flex:1;display:flex;flex-direction:column;justify-content:center}
+
+.signature{align-self:center;font-family:'Playfair Display',serif;font-style:italic;font-weight:600;font-size:1.35rem;color:var(--gold);
+  padding:6px 22px;border-radius:999px;border:1px solid rgba(192,138,91,.45);background:rgba(255,253,248,.55);
+  box-shadow:0 0 22px rgba(192,138,91,.28),inset 0 0 0 3px rgba(255,253,248,.7);animation:glow 3.6s ease-in-out infinite alternate}
+@keyframes glow{to{box-shadow:0 0 34px rgba(192,138,91,.5),inset 0 0 0 3px rgba(255,253,248,.7)}}
+.main-title{text-align:center;font-weight:700;font-size:clamp(1.7rem,6vw,2.5rem);letter-spacing:-.01em;color:var(--ink);margin:22px 0 8px}
+.rule{width:84px;height:3px;border-radius:3px;margin:0 auto 34px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+
+.category-btn{width:100%;display:flex;justify-content:space-between;align-items:center;gap:12px;text-align:left;cursor:pointer;
+  background:linear-gradient(180deg,#FFFFFF,var(--paper));color:var(--ink);font-size:1.1rem;font-weight:600;
+  border:1px solid var(--line);border-radius:var(--r-lg);padding:20px 22px;margin:11px 0;
+  box-shadow:0 1px 0 #fff inset,0 0 0 4px rgba(255,253,248,.55),0 10px 26px -12px rgba(60,48,20,.35);
+  position:relative;overflow:hidden;transition:transform .25s,box-shadow .25s,border-color .25s}
+.category-btn::before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:4px;border-radius:0 4px 4px 0;background:linear-gradient(var(--teal),var(--gold))}
+.category-btn span:last-child{font-size:.85rem;font-weight:500;color:var(--ink-soft);background:var(--cream-2);padding:4px 12px;border-radius:999px;white-space:nowrap}
+.category-btn:hover{transform:translateY(-3px);border-color:rgba(91,75,138,.5);box-shadow:0 1px 0 #fff inset,0 0 0 4px rgba(91,75,138,.12),0 16px 30px -12px rgba(60,48,20,.4)}
+.category-btn:focus-visible,.option-btn:focus-visible,.back-btn:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
+
+/* Quiz */
+.top-bar{position:fixed;left:0;right:0;top:calc(env(safe-area-inset-top,0px) + 6px);z-index:10;pointer-events:none}
+.top-row{display:flex;justify-content:space-between;align-items:center;max-width:780px;margin:0 auto;padding:0 12px}
+.top-row>*{pointer-events:auto}
+.hidden-meta{display:none}
+#quiz-screen{padding-top:44px}
+.back-btn{width:28px;height:28px;border-radius:50%;border:1px solid var(--line);background:rgba(255,253,248,.85);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:var(--ink);font-size:.9rem;line-height:1;cursor:pointer;transition:background .2s,transform .2s}
+.back-btn:hover{background:var(--sand);transform:translateX(-2px)}
+.quiz-title{font-weight:600;font-size:.95rem;text-align:center;flex:1}
+.score-counter{font-weight:700;font-size:.72rem;color:#fff;background:linear-gradient(135deg,rgba(91,75,138,.92),rgba(67,54,107,.92));padding:4px 10px;border-radius:999px;white-space:nowrap;box-shadow:0 4px 10px -4px rgba(91,75,138,.7)}
+.progress{height:5px;border-radius:5px;background:var(--cream-2);margin-top:12px;overflow:hidden}
+.progress i{display:block;height:100%;width:0;border-radius:5px;background:linear-gradient(90deg,var(--teal),var(--gold));transition:width .5s cubic-bezier(.2,.8,.2,1)}
+
+.question-card{background:linear-gradient(180deg,#FFFFFF,var(--paper));border:1px solid var(--line);border-radius:var(--r-lg);padding:24px 22px 16px 26px;margin-bottom:24px;position:relative;
+  box-shadow:0 1px 0 #fff inset,0 0 0 4px rgba(255,253,248,.55),0 14px 30px -16px rgba(60,48,20,.4)}
+.question-card::before{content:"";position:absolute;left:0;top:20px;bottom:20px;width:4px;border-radius:0 4px 4px 0;background:linear-gradient(var(--teal),var(--gold))}
+.question-text{font-size:1.02rem;line-height:1.7;font-weight:600;color:var(--ink);margin-bottom:14px}
+.option-btn{display:block;width:100%;text-align:left;padding:13px 16px;margin:9px 0;font-size:.95rem;line-height:1.5;color:#3B3354;cursor:pointer;
+  background:#FFFFFF;border:1.5px solid rgba(47,39,68,.16);border-radius:var(--r-md);box-shadow:0 1px 2px rgba(60,48,20,.06);
+  transition:background .2s,border-color .2s,transform .2s,box-shadow .2s}
+.option-btn:hover:not(:disabled){background:#FCEFE4;border-color:var(--gold);transform:translateX(3px);box-shadow:0 6px 14px -8px rgba(192,138,91,.7)}
+.option-btn:disabled{cursor:default;color:var(--ink-soft)}
+.option-btn.correct{background:var(--ok-bg)!important;border-color:var(--ok)!important;color:#1F5A3A!important;font-weight:500;animation:pop .35s ease}
+.option-btn.incorrect{background:var(--bad-bg)!important;border-color:var(--bad)!important;color:#7C2A25!important;animation:shake .35s ease}
+@keyframes pop{50%{transform:scale(1.015)}}
+@keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+
+.note{margin:10px 0 6px;padding:10px 14px;border-radius:12px;background:#F3ECFA;border:1px dashed rgba(91,75,138,.5);font-size:.85rem;line-height:1.5;color:#43366B}
+.floating-emoji{position:fixed;font-size:2.8rem;pointer-events:none;z-index:1000;animation:floatUp 1.5s ease-out forwards}
+@keyframes floatUp{0%{opacity:1;transform:translate(-50%,0) scale(.5)}50%{transform:translate(-50%,-50px) scale(1.2)}100%{opacity:0;transform:translate(-50%,-100px) scale(1)}}
+
+@media (max-width:600px){.question-card{padding:20px 16px 12px 20px}.question-text{font-size:.98rem}.option-btn{font-size:.92rem}.category-btn{font-size:1rem;padding:18px}}
+@media (prefers-reduced-motion:reduce){.blob,.signature,.option-btn,.category-btn{animation:none!important;transition:none!important}canvas{display:none}}
+</style>
+</head>
+<body>
+<div class="bg" aria-hidden="true">
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="blob b4"></div>
+  <canvas id="sandCanvas"></canvas>
+  <div class="grain"></div>
+</div>
+
+<div id="home-screen">
+  <div class="home-content">
+    <div class="signature">by: al_witify</div>
+    <h1 class="main-title">Pathology MCQs Endocrine</h1>
+    <div class="rule"></div>
+    <button class="category-btn" onclick="startCategory('thyroid')"><span>Thyroid Pathology</span><span>(18 Questions)</span></button>
+    <button class="category-btn" onclick="startCategory('adrenal')"><span>Adrenal Pathology</span><span>(11 Questions)</span></button>
+    <button class="category-btn" onclick="startCategory('pancreas')"><span>Pancreas & Diabetes</span><span>(2 Questions)</span></button>
+  </div>
+</div>
+
+<div id="quiz-screen">
+  <div class="top-bar">
+    <div class="top-row">
+      <button class="back-btn" onclick="goHome()" aria-label="Back">&#8592;</button>
+      <div class="hidden-meta" id="current-category-title">Category</div>
+      <div class="score-counter">Score: <span id="score">0</span>/<span id="total-q">0</span></div>
+    </div>
+    <div class="progress hidden-meta"><i id="bar"></i></div>
+  </div>
+  <div id="questions-container"></div>
+</div>
+
+<script>
+// Soft golden dust
+const canvas=document.getElementById('sandCanvas'),ctx=canvas.getContext('2d');let parts=[];
+function size(){canvas.width=innerWidth;canvas.height=innerHeight}
+class P{constructor(){this.r()}
+ r(){this.x=Math.random()*canvas.width;this.y=Math.random()*canvas.height;this.s=Math.random()*1.8+.6;this.vx=Math.random()*.3-.15;this.vy=-(Math.random()*.25+.05);this.a=Math.random()*.4+.15;this.ph=Math.random()*6}
+ step(t){this.x+=this.vx;this.y+=this.vy;if(this.y<-5){this.y=canvas.height+5;this.x=Math.random()*canvas.width}if(this.x<0)this.x=canvas.width;if(this.x>canvas.width)this.x=0;
+  ctx.fillStyle=`rgba(192,138,91,${this.a*(.65+.35*Math.sin(t/900+this.ph))})`;ctx.beginPath();ctx.arc(this.x,this.y,this.s,0,6.283);ctx.fill()}}
+function init(){size();parts=Array.from({length:Math.min(90,canvas.width*canvas.height/14000)},()=>new P())}
+addEventListener('resize',init);init();
+(function loop(t){ctx.clearRect(0,0,canvas.width,canvas.height);parts.forEach(p=>p.step(t));requestAnimationFrame(loop)})(0);
+
+// Audio
+let audioCtx;
+function playSound(ok){
+ audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)();
+ if(audioCtx.state==='suspended')audioCtx.resume();
+ const o=audioCtx.createOscillator(),g=audioCtx.createGain(),n=audioCtx.currentTime;
+ o.connect(g);g.connect(audioCtx.destination);
+ if(ok){o.type='sine';o.frequency.setValueAtTime(600,n);o.frequency.exponentialRampToValueAtTime(1200,n+.1)}
+ else{o.type='sawtooth';o.frequency.setValueAtTime(150,n);o.frequency.exponentialRampToValueAtTime(100,n+.2)}
+ g.gain.setValueAtTime(.3,n);g.gain.exponentialRampToValueAtTime(.01,n+1);o.start(n);o.stop(n+1);
+}
+
+// Emoji
+const correctEmojis=['🪿','❤️','🔥','❤️‍🔥','🫶','💯','💪','😍'];
+const incorrectEmojis=['😑','🤦','💤','❌','💔','🦖','😂'];
+function showFloatingEmoji(e,ok){
+ const el=document.createElement('div');el.className='floating-emoji';
+ const a=ok?correctEmojis:incorrectEmojis;el.innerText=a[Math.floor(Math.random()*a.length)];
+ el.style.left=(e.clientX||innerWidth/2)+'px';el.style.top=(e.clientY||innerHeight/2)+'px';
+ document.body.appendChild(el);setTimeout(()=>el.remove(),1500);
+}
+
+const quizData = {
+ "thyroid": [
+  {
+   "q": "1. A 28-year-old woman has had difficulty concentrating at work for the past month. She is constantly getting up and walking around to visit co-workers. She complains that the work area is too hot. She seems nervous and often spills her coffee. She has been eating more but has lost 5 kg in the past 2 months. On physical examination her temperature is 37.5°C, pulse 108/minute, respiratory rate 24/minute, and blood pressure 145/85 mm Hg. Which of the following laboratory findings is most likely to be present in this woman?",
+   "o": [
+    "A. Decreased catecholamines",
+    "B. Decreased iodine uptake",
+    "C. Decreased plasma insulin",
+    "D. Decreased TSH",
+    "E. Increased ACTH",
+    "F. Increased calcitonin"
+   ],
+   "a": 3
+  },
+  {
+   "q": "2. A 49-year-old woman has had increasing cold intolerance, weight gain of 4 kg, and sluggishness over the past two years. A physical examination reveals dry, coarse skin and alopecia of the scalp. Her thyroid is not palpably enlarged. Her serum TSH is 11.7 mU/L with thyroxine of 2.1 micrograms/dL. A year ago, anti-thyroglobulin and anti-thyroid peroxidase autoantibodies were detected at high titer. Which of the following thyroid diseases is she most likely to have?",
+   "o": [
+    "A. DeQuervain disease",
+    "B. Papillary carcinoma",
+    "C. Hashimoto thyroiditis",
+    "D. Multinodular goiter",
+    "E. Graves disease"
+   ],
+   "a": 2
+  },
+  {
+   "q": "3. A 47-year-old man has a palpable mass in the right lobe of his thyroid gland. Ultrasound examination reveals a 3 cm right lobe mass and a 1 cm left lobe mass. Laboratory studies show a normal TSH and free T4. A fine needle aspiration biopsy of the masses is performed. Microscopic findings include nests of round to ovoid cells without follicle development, consistent with parafollicular C cells. Which of the following is the most likely diagnosis?",
+   "o": [
+    "A. Subacute granulomatous thyroiditis",
+    "B. Multinodular goiter",
+    "C. Medullary carcinoma",
+    "D. Hashimoto thyroiditis",
+    "E. Follicular adenoma"
+   ],
+   "a": 2
+  },
+  {
+   "q": "4. An 35-year-old woman has had insomnia for the past 4 months, as well as episodes of diarrhea with up to 4 loose stools per day. On physical examination, she exhibits bilateral proptosis. Her outstretched hands have a fine tremor. On palpation of her neck, the thyroid gland does not appear to be enlarged and no masses are palpable. Laboratory studies show a serum TSH of 8.8 microU/mL in association with a serum total thyroxine of 15.1 microgram/dL. Which of the following is the most likely diagnosis?",
+   "o": [
+    "A. Graves disease",
+    "B. Pituitary adenoma",
+    "C. Chronic thyroiditis",
+    "D. Prior thyroidectomy",
+    "E. Multinodular goiter"
+   ],
+   "a": 1
+  },
+  {
+   "q": "5. A 25-year-old woman has had a 7 kg weight loss over the past 6 months without dieting or trying to lose weight. On physical examination she appears anxious and worried. Her hands are warm and tremulous. Vital signs show her temperature to be 37.4°C pulse 110/minute, respirations 26/minute, and blood pressure 135/75 mm Hg. Serum laboratory data include glucose 78 mg/dL and creatinine 0.8 mg/dL. Which of the following additional laboratory test findings is most likely to be present in this woman?",
+   "o": [
+    "A. Plasma cortisol of 40 microgm/dL at 8 am",
+    "B. Serum antinuclear antibody of 1:256",
+    "C. Urinary free catecholamines of 500 microgm/24 hr",
+    "D. Serum gastrin of 200 pg/mL",
+    "E. Serum total thyroxine of 14 microgm/dL"
+   ],
+   "a": 4
+  },
+  {
+   "q": "6. A 47-year-old woman feels a 'lump' in her neck that she didn't notice 5 months before. Her physician's assistant palpates a firm nodule 2 cm in size to the left of midline in the region of the thyroid gland. By scintigraphic scanning this nodule appears 'cold' with normal activity in the surrounding normally sized thyroid gland. Which of the following is the most likely diagnosis?",
+   "o": [
+    "A. Papillary carcinoma",
+    "B. Follicular adenoma",
+    "C. Thyroglossal duct cyst",
+    "D. Toxic nodular goiter",
+    "E. Granulomatous thyroiditis",
+    "F. Hashimoto thyroiditis"
+   ],
+   "a": 1
+  },
+  {
+   "q": "7. A 40-year-old woman notes increasing enlargement and discomfort in her neck over the past week. The nurse practitioner palpates diffuse, symmetrical enlargement with tenderness in the region of the thyroid gland. Thyroid function tests show serum TSH of 0.8 mU/L and thyroxine of 11.9 micrograms/dL. She is referred to an endocrinologist, but the next available appointment is in 8 weeks. When examined by the endocrinologist her thyroid is no longer palpable and there is no pain. Repeat thyroid function tests reveal a serum TSH of 3.8 mU/L and thyroxine of 5.7 micrograms/dL. Which of the following thyroid diseases is most likely to produce these findings?",
+   "o": [
+    "A. Nodular goiter",
+    "B. Non-Hodgkin lymphoma",
+    "C. DeQuervain disease",
+    "D. Hashimoto thyroiditis",
+    "E. Graves disease",
+    "F. Riedel thyroiditis",
+    "G. Iodine deficiency"
+   ],
+   "a": 2
+  },
+  {
+   "q": "8. A 47-year-old woman has felt a 'lump' in her neck for the past 2 months. On physical examination there is a firm nodule in the right lobe of her thyroid. Following fine needle aspiration and cytologic diagnosis of a neoplasm, a thyroidectomy is performed. Grossly, there is a 3 cm mass in the right lower pole that on sectioning is cystic and has papillary excrescences. Which of the following microscopic pathologic findings is most typical for this lesion?",
+   "o": [
+    "A. Giant cells",
+    "B. Amyloid stroma",
+    "C. Small thyroid follicles",
+    "D. Clear nuclear chromatin",
+    "E. Pleomorphic spindle cells"
+   ],
+   "a": 3
+  },
+  {
+   "q": "9. A 53-year-old woman has pain in her neck for the past month. On physical examination her vital signs include T 37°C, P 77/minute, RR 16/minute, and BP 130/80 mm Hg. There is an irregular firm mass palpable in her left neck. A CT scan shows an infiltrative mass involving the left lobe of the thyroid and extending into adjacent soft tissues. Laboratory studies show TSH 2.9 mU/L, total serum thyroxine 8.6 microgm/dL, calcium 8.7 mg/dL, and phosphorus 2.8 mg/dL. A fine needle aspiration biopsy of the mass shows malignant spindle-shaped cells present that are strongly positive for nuclear p53 protein immunohistochemically. Which of the following neoplasms is this woman most likely to have?",
+   "o": [
+    "A. Anaplastic carcinoma",
+    "B. Follicular carcinoma",
+    "C. Medullary carcinoma",
+    "D. Non-Hodgkin lymphoma",
+    "E. Papillary carcinoma",
+    "F. Parathyroid carcinoma"
+   ],
+   "a": 0
+  },
+  {
+   "q": "10. A 40-year-old woman has noted painless swelling of her neck for the past 3 weeks. On physical examination there is diffuse enlargement of her thyroid. Laboratory studies show an increased titer of anti-thyroid peroxidase and anti-thyroglobulin antibodies. Within a month, the swelling has diminished. Which of the following complications is she most likely to develop?",
+   "o": [
+    "A. Amyloidosis",
+    "B. Hypothyroidism",
+    "C. Non-Hodgkin lymphoma",
+    "D. Papillary carcinoma",
+    "E. Riedel thyroiditis"
+   ],
+   "a": 1
+  },
+  {
+   "q": "11. A 38-year-old woman has had a feeling of fullness in her neck for the past year. She is otherwise asymptomatic. Her physician's assistant palpates a symmetrically enlarged but nontender thyroid gland. She has no difficulty swallowing. There is no palpable lymphadenopathy. She is afebrile. Her serum TSH is 3.5 mU/L with total thyroxine of 8.2 micrograms/dL. Thyroid peroxidase antibody is not detected. Two years later, her thyroid has not appreciably changed in size. Which of the following conditions is she most likely to have?",
+   "o": [
+    "A. Graves disease",
+    "B. Nodular goiter",
+    "C. Hashimoto thyroiditis",
+    "D. Anaplastic carcinoma",
+    "E. Follicular adenoma",
+    "F. Papillary carcinoma"
+   ],
+   "a": 1
+  },
+  {
+   "q": "12. A 30-year-old woman from Barcelona has noted enlargement of her neck over the past 4 months. On physical examination, she has a diffusely enlarged thyroid that is not painful to palpation. Her TSH level is 0.2 mU/L. A subtotal thyroidectomy is performed and histologically the tissue shows follicles with papillary infoldings lined by tall columnar cells. Which of the following is the most likely diagnosis?",
+   "o": [
+    "A. Subacute granulomatous thyroiditis",
+    "B. Papillary carcinoma",
+    "C. Multinodular goiter",
+    "D. Hashimoto thyroiditis",
+    "E. Graves disease"
+   ],
+   "a": 4
+  },
+  {
+   "q": "13. A 35-year-old G3 P3 woman has increasing fullness in her neck for the past 5 months since delivery of her last infant. On physical examination her thyroid gland is diffusely enlarged but not painful to palpation. Laboratory studies show an anti-thyroglobulin titer of 1:256 and an anti-thyroid peroxidase titer of 1:512. Her TSH and thyroxine are normal. Which of the following is the most likely diagnosis?",
+   "o": [
+    "A. Riedel thyroiditis",
+    "B. Adenovirus infection",
+    "C. Subacute lymphocytic thyroiditis",
+    "D. Cretinism",
+    "E. Subacute granulomatous thyroiditis",
+    "F. Diffuse goiter"
+   ],
+   "a": 2
+  },
+  {
+   "q": "14. A 39-year-old woman has noted discomfort with fullness to her neck over the past year. On physical examination she is afebrile and normotensive. There is irregular enlargement of her thyroid gland, but no tenderness on palpation. A scintigraphic scan shows normal uptake except for increased uptake in a 1 cm area in the left lower lobe. Her anti-thyroid peroxidase antibody is negative. Which of the following complications is she most likely to develop?",
+   "o": [
+    "A. Thyrotoxicosis",
+    "B. Papillary carcinoma",
+    "C. Graves disease",
+    "D. Subacute thyroiditis",
+    "E. Hypothyroidism"
+   ],
+   "a": 0
+  },
+  {
+   "q": "15. Which of the following is true of papillary thyroid carcinoma?",
+   "o": [
+    "A. May have psammoma bodies",
+    "B. The least common kind of thyroid carcinoma",
+    "C. The type of thyroid carcinoma with the worst prognosis",
+    "D. Occurs in patients with MEN II",
+    "E. Most common in elderly patients"
+   ],
+   "a": 0
+  },
+  {
+   "q": "16. The most common cause of hypothyroidism in underprivileged countries is:",
+   "o": [
+    "A. Pituitary dysfunction",
+    "B. DeQuervain's thyroiditis",
+    "C. Graves' disease",
+    "D. Hashimoto's thyroiditis",
+    "E. Iodine deficiency"
+   ],
+   "a": 4
+  },
+  {
+   "q": "17. Which of the following is true regarding multiple endocrine neoplasia (MEN) I syndrome?",
+   "o": [
+    "A. Virtually all patients develop medullary thyroid carcinoma",
+    "B. The genetic abnormality involves the RET gene",
+    "C. The genetic abnormality involves a proto-oncogene",
+    "D. Many patients develop parathyroid hyperplasia",
+    "E. Some patients may have a Marfanoid habitus"
+   ],
+   "a": 3
+  },
+  {
+   "q": "18. Your sister is complaining that she is always tired, despite getting enough sleep. You notice that she seems pale, and when you feel her pulse it is quite slow. She also mentions that she can't stand the cold these days. What two lab tests would be most helpful in diagnosing her condition?",
+   "o": [
+    "A. FSH and LH levels",
+    "B. Free T4 and TSH levels",
+    "C. Calcium, phosphate, and parathyroid hormone levels",
+    "D. Insulin-like growth factor and prolactin levels",
+    "E. Cortisol and ACTH levels"
+   ],
+   "a": 1
+  }
+ ],
+ "adrenal": [
+  {
+   "q": "1. A 19-year-old previously healthy woman has had a mild pharyngitis followed by a high fever over the past 24 hours. When seen in the emergency room, her skin now shows extensive areas of purpura. Vital signs include temperature 39°C, pulse rate 102/minute, respiratory rate 26/minute, and blood pressure 80/55 mm Hg. Laboratory studies show a serum sodium of 115 mmol/L, potassium 5.3 mmol/L, chloride 92 mmol/L, CO2 22 mmol/L, glucose 42 mg/dL, and creatinine 1.1 mg/dL. Which of the following is the most likely diagnosis?",
+   "o": [
+    "A. Idiopathic adrenalitis",
+    "B. Disseminated tuberculosis",
+    "C. Reactive systemic amyloidosis",
+    "D. Sheehan syndrome",
+    "E. Meningococcemia",
+    "F. Hemochromatosis"
+   ],
+   "a": 4
+  },
+  {
+   "q": "2. A 48-year-old woman has experienced constant back pain exacerbated by movement over the past month. She reports increasing weakness over the past 3 months. On physical examination her blood pressure is 165/110 mm Hg. She has a BMI of 28 kg/m2. Her face appears plethoric. A radiograph of the spine reveals a compressed fracture at T10. Laboratory findings include a serum glucose of 155 mg/dL. Which of the following pathologic lesions is most likely to explain her findings?",
+   "o": [
+    "A. Adrenal cortical carcinoma",
+    "B. Anaplastic thyroid carcinoma",
+    "C. Empty sella syndrome",
+    "D. Pheochromocytoma",
+    "E. Multinodular goiter"
+   ],
+   "a": 0
+  },
+  {
+   "q": "3. A 33-year-old woman has noted a weight gain of 6 kg over the past year. She has normal menstrual periods. On physical examination her blood pressure is 170/105 mm Hg. Her skin shows marked plethora. Abdominal striae are present. A serum electrolyte panel shows sodium 141 mmol/L, potassium 4.4 mmol/L, chloride 100 mmol/L, CO2 25 mmol/L, glucose 181 mg/dL, and creatinine 1.0 mg/dL. Which of the following radiologic findings would you most expect to be present in this patient?",
+   "o": [
+    "A. 2 cm right adrenal mass with abdominal CT scan",
+    "B. 4 cm mass at aortic bifurcation with MR imaging",
+    "C. Multiple pulmonary nodules on chest radiograph",
+    "D. 10 cm cystic right ovarian lesion by abdominal ultrasound",
+    "E. 2 cm 'hot' thyroid nodule with Tc99 scintigraphic scan"
+   ],
+   "a": 0
+  },
+  {
+   "q": "4. A 50-year-old man has episodic headaches for 3 months. On physical examination his blood pressure is 185/110 mm Hg, with no other remarkable findings. Laboratory studies show sodium 145 mmol/L, potassium 4.3 mmol/L, chloride 103 mmol/L, CO2 26 mmol/L, glucose 91 mg/dL, and creatinine 1.3 mg/dL. An abdominal CT scan shows a 7 cm left adrenal mass. During surgery, as the left adrenal gland is removed, there a marked rise in blood pressure. Which of the following laboratory test findings most likely explains his findings?",
+   "o": [
+    "A. Decreased serum cortisol",
+    "B. Decreased urinary homovanillic acid",
+    "C. Increased serum ACTH",
+    "D. Increased urinary free catecholamines",
+    "E. Elevated serum ANCA"
+   ],
+   "a": 3
+  },
+  {
+   "q": "5. A 56-year-old woman has had diffuse, dull, constant abdominal pain for the past 2 months. On physical examination no abnormal findings are noted. An abdominal CT scan shows a 3 cm right adrenal mass. The right adrenal is excised and on microscopic examination the mass is composed of cells resembling adrenal cortex. Which of the following features is the most reliable indicator that this mass is malignant?",
+   "o": [
+    "A. Cellular atypia",
+    "B. Presence of mitoses",
+    "C. Invasion",
+    "D. Size of the mass",
+    "E. Cellular necrosis"
+   ],
+   "a": 2
+  },
+  {
+   "q": "6. A 45-year-old man has a 4 month history of nonfocal, generalized headaches. On physical examination he is found to have a blood pressure of 170/110 mm Hg. Laboratory studies show a serum sodium of 146 mmol/L, potassium 2.3 mmol/L, chloride 103 mmol/L, CO2 27 mmol/L, glucose 82 mg/dL, and creatinine 1.2 mg/dL. His plasma renin activity is 0.1 ng/mL/hr and his serum aldosterone 65 ng/mL. Which of the following is the most likely cause for his findings?",
+   "o": [
+    "A. 21-hydroxylase enzyme deficiency",
+    "B. Adrenal cortical adenoma",
+    "C. Pituitary adenoma",
+    "D. Exogenous corticosteroid administration",
+    "E. Renal cell carcinoma"
+   ],
+   "a": 1
+  },
+  {
+   "q": "7. A 45-year-old woman with severe rheumatoid arthritis has been on chronic corticosteroid therapy for the past 15 years. She is admitted for an orthopedic procedure to correct joint deformity from her disease. She continues to receive her regular dosage of 5 mg of prednisone per day. Three days postoperatively, she develops an aspiration pneumonia with Klebsiella pneumoniae cultured from sputum. Five days following the surgery, she becomes obtunded. Laboratory findings at that time include: sodium 105 mmol/L, potassium 5.4 mmol/L, chloride 87 mmol/L, CO2 16 mmol/L, glucose 40 mg/dL, and creatinine 1.1 mg/dL. Which of the following complications is most likely to have occurred in this patient?",
+   "o": [
+    "A. Anterior pituitary necrosis",
+    "B. Waterhouse-Friderichsen syndrome",
+    "C. Acute Addisonian crisis",
+    "D. Conn syndrome",
+    "E. 21-hydroxylase deficiency"
+   ],
+   "a": 2
+  },
+  {
+   "q": "8. A clinical study is performed involving subjects who developed Addision disease. They were recorded to have laboratory studies with hyponatremia, hyperkalemia, hypoglycemia, and decreased plasma cortisol. They became hypotensive. In some subjects, this disease had an acute onset over less than 2 days' time. Which of the following conditions is most likely to produce this acute course?",
+   "o": [
+    "A. Waterhouse-Friderichsen syndrome",
+    "B. Metastatic small cell anaplastic carcinoma",
+    "C. Disseminated Mycobacterium tuberculosis infection",
+    "D. Reactive systemic amyloidosis",
+    "E. Blunt force abdominal trauma"
+   ],
+   "a": 0
+  },
+  {
+   "q": "9. A patient with Cushing syndrome might present with any of the following EXCEPT:",
+   "o": [
+    "A. Obesity",
+    "B. A buffalo hump",
+    "C. Moon facies",
+    "D. Bronze or hyperpigmented skin",
+    "E. Glucose intolerance"
+   ],
+   "a": 3
+  },
+  {
+   "q": "10. Which of the following is true regarding pheochromocytoma?",
+   "o": [
+    "A. It can cause hypertension",
+    "B. It is usually an aggressive, malignant tumor",
+    "C. It only occurs in the adrenal gland",
+    "D. It is derived from neural crest cells",
+    "E. Many tumors have a 1p deletion"
+   ],
+   "a": 0,
+   "n": "Note: option D (derived from neural crest cells) is also a true statement; the answer key for this question lists A."
+  },
+  {
+   "q": "11. Which of the following is true regarding Addison's disease?",
+   "o": [
+    "A. It is characterized by an overproduction of catecholamines",
+    "B. Most cases are due to infection",
+    "C. It is also called primary chronic adrenal insufficiency",
+    "D. The onset is sudden",
+    "E. Patients are often hypertensive"
+   ],
+   "a": 2
+  }
+ ],
+ "pancreas": [
+  {
+   "q": "1. A 57-year-old man is found comatose. On physical examination he has decreased skin turgor. Laboratory studies show a blood glucose of 780 mg/dL. Urinalysis reveals no ketosis or proteinuria, though there is 4+ glucosuria. Which of the following is the most likely diagnosis?",
+   "o": [
+    "A. Neuroendocrine tumor secreting glucagon",
+    "B. Type I diabetes mellitus",
+    "C. Cushing syndrome",
+    "D. Ingestion of a large quantity of sugar",
+    "E. Type II diabetes mellitus"
+   ],
+   "a": 4
+  },
+  {
+   "q": "2. Patients with diabetes have an increased risk of all of the following EXCEPT:",
+   "o": [
+    "A. Cataracts",
+    "B. Infections",
+    "C. Increased atherosclerosis",
+    "D. Peripheral neuropathy",
+    "E. Pancreatic carcinoma"
+   ],
+   "a": 4
+  }
+ ]
+};
+
+// Quiz logic
+let currentScore=0,totalQuestions=0,answered=0;
+const titles={thyroid:"Thyroid Pathology MCQs",adrenal:"Adrenal Pathology MCQs",pancreas:"Pancreas & Diabetes MCQs"};
+
+function startCategory(cat){
+ document.getElementById('home-screen').style.display='none';
+ document.getElementById('quiz-screen').style.display='flex';
+ document.getElementById('current-category-title').innerText=titles[cat];
+ const list=quizData[cat];totalQuestions=list.length;currentScore=0;answered=0;updateScore();
+ const box=document.getElementById('questions-container');box.innerHTML='';
+ list.forEach(item=>{
+  const card=document.createElement('div');card.className='question-card';
+  const qt=document.createElement('div');qt.className='question-text';qt.innerText=item.q;card.appendChild(qt);
+  item.o.forEach((t,i)=>{
+   const b=document.createElement('button');b.className='option-btn';b.innerText=t;
+   b.onclick=e=>handleAnswer(card,i,item,e);card.appendChild(b);
+  });
+  box.appendChild(card);
+ });
+ scrollTo(0,0);
+}
+
+function handleAnswer(card,picked,item,e){const correct=item.a;
+ const btns=card.querySelectorAll('.option-btn');
+ btns.forEach(b=>b.disabled=true);
+ const ok=picked===correct;
+ if(ok){currentScore++;btns[picked].classList.add('correct')}
+ else{btns[picked].classList.add('incorrect');btns[correct].classList.add('correct')}
+ if(item.n){const nt=document.createElement('div');nt.className='note';nt.innerText=item.n;card.appendChild(nt)}
+ answered++;updateScore();playSound(ok);showFloatingEmoji(e,ok);
+}
+
+function updateScore(){
+ document.getElementById('score').innerText=currentScore;
+ document.getElementById('total-q').innerText=totalQuestions;
+ document.getElementById('bar').style.width=(totalQuestions?answered/totalQuestions*100:0)+'%';
+}
+
+function goHome(){
+ document.getElementById('quiz-screen').style.display='none';
+ document.getElementById('home-screen').style.display='flex';
+ scrollTo(0,0);
+}
+</script>
+</body>
+</html>
